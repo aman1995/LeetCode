@@ -1,0 +1,29 @@
+class Solution {
+    public int minFlipsMonoIncr(String S) {
+        if (S.length() == 0)
+            return 0;
+        int[] zero = new int[S.length()+1];
+        int[] one = new int[S.length()+1];
+        zero[0] = 0;
+        one[S.length()] = 0;
+        
+        for (int i = 1; i <= S.length(); i++){
+            if (S.charAt(i-1) == '1')
+                zero[i] = zero[i-1]+1;
+            else
+                zero[i] = zero[i-1];
+        }
+        for (int i = S.length()-1; i >= 0; i--){
+            if (S.charAt(i) == '0')
+                one[i] = one[i+1] + 1;
+            else
+                one[i] = one[i+1];
+        }
+        
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < zero.length; i++){
+            min = Math.min(min, zero[i] + one[i]);
+        } 
+        return min;
+    }
+}
