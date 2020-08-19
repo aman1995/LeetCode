@@ -1,0 +1,33 @@
+class Solution {
+    public List<String> wordSubsets(String[] A, String[] B) {
+        
+        List<String> ans = new ArrayList<>();
+        int freqP[] = new int[26];
+        int freqT[],i=0;
+        
+        for(String str : B){
+            freqT = new int[26];
+            map(freqT,str);
+            for(i=0;i<26;i++)
+                freqP[i] = Math.max(freqP[i], freqT[i]);
+        }
+        
+        for(String str : A){
+            freqT= new int[26];
+            map(freqT,str);
+            
+            for(i=0;i<26;i++)
+                if(freqP[i] > freqT[i])
+                    break;
+            
+            if(i == 26)
+                ans.add(str);
+        }
+        return ans;
+    }
+    
+    public static void map(int arr[], String str){
+        for(char ch : str.toCharArray())
+            arr[ch-'a']++;
+    }
+}
