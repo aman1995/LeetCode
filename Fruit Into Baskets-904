@@ -1,0 +1,12 @@
+class Solution {
+    public int totalFruit(int[] tree) {
+        int res = 0, cur = 0, bcount = 0, a = 0, b = 0;
+        for (int k :  tree) {
+            cur = k == a || k == b ? cur + 1 : bcount + 1;
+            bcount = k == b ? bcount + 1 : 1;
+            if (b != k) {a = b; b = k;}
+            res = Math.max(res, cur);
+        }
+        return res;
+    }
+}
