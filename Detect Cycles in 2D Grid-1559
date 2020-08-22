@@ -1,0 +1,42 @@
+class Solution {
+    static int m,n;
+    static int dir[][] = new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
+    public boolean containsCycle(char[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+
+        boolean vis[][] = new boolean[m][n];
+        for(int i=0; i<m; i++){
+           for(int j=0; j<n; j++){
+              if(!vis[i][j]){
+                  if(dfs(-1,-1,i,j,vis,grid,grid[i][j]))
+                    return true;
+              }
+          }
+       }
+          return false;
+    }
+    
+     public static boolean dfs(int p1, int p2, int i, int j, 
+                               boolean vis[][],char arr[][], char ch){
+       if(i<0 || j<0 || i>=m || j>=n || ch!=arr[i][j])
+           return false;
+       
+       if(vis[i][j])
+            return true;
+           
+        vis[i][j] = true;
+        for(int k=0;k<dir.length;k++){
+            int I = dir[k][0] + i;
+            int J = dir[k][1] + j;
+            
+            if(p1==I && J==p2)
+                continue;
+            
+            if(dfs(i,j,I,J,vis,arr,ch))
+                return true;
+        }
+        return false;
+       
+   }
+}
