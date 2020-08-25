@@ -1,0 +1,37 @@
+class Solution {
+    static Integer dp[];
+    
+    public int mincostTickets(int[] days, int[] costs) {
+        dp = new Integer[366];
+        return findMin(0,days,costs);
+    }
+    public static int findMin(int index, int days[], int costs[]){
+        
+        if(index>=days.length)
+            return 0;
+        
+        if(dp[days[index]] != null)
+            return dp[days[index]];
+        
+        int singleDayPrice = costs[0] + findMin(index+1, days,costs);
+        
+        int curDay = days[index];
+        int weekDay = curDay + 6;
+        int monthDay = curDay + 29;
+        int i = index;
+        
+        while(i<days.length && days[i] <= weekDay)
+            i++;    
+    
+        int weekDayPrice = costs[1] + findMin(i, days,costs);
+        
+        i=index;
+        while(i<days.length && days[i] <= monthDay)
+            i++;
+        
+        int monthDayPrice = costs[2] + findMin(i, days,costs);
+        
+        return dp[days[index]] = Math.min(singleDayPrice, 
+                        Math.min(weekDayPrice, monthDayPrice));
+    }
+}
