@@ -1,0 +1,28 @@
+class Solution {
+    public String strWithout3a3b(int A, int B) {
+        
+       StringBuilder sb = new StringBuilder();
+        
+        while (A > 0 || B > 0) {
+            if (sb.length() >= 2 && sb.charAt(sb.length()-1) == 
+                                            sb.charAt(sb.length()-2)) {
+                if (sb.charAt(sb.length() - 1) == 'a') {
+                    sb.append('b');
+                    B--;
+                } else {
+                    sb.append('a');
+                    A--;
+                }
+            } else {
+                if (A >= B) {
+                    sb.append('a');
+                    A--;
+                } else {
+                    sb.append('b');
+                    B--;
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
