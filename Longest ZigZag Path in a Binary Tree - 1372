@@ -1,0 +1,20 @@
+var longestZigZag = function(root) {
+    globalMax = 0;
+    calculate(root.right, true, 1)
+    calculate(root.left, false, 1)
+    return globalMax;
+}
+
+function calculate(root, right, sum){
+    
+    if(root === undefined || root == null)
+        return 0;
+    globalMax = Math.max(globalMax, sum)
+    if(right){
+        if(root.right) calculate(root.right, true, 1)
+        if(root.left) calculate(root.left, false, sum + 1)
+    }else{
+        if(root.right) calculate(root.right, true, sum + 1)
+        if(root.left) calculate(root.left, false, 1)
+    }
+}
