@@ -1,0 +1,30 @@
+class Solution {
+    
+    String smallestString = "";
+    
+    public String smallestFromLeaf(TreeNode root) {
+        
+        getSmallestLeaf(root, "");
+        return smallestString;
+    }
+    
+    public void getSmallestLeaf(TreeNode root, String prevString) {
+        
+        if(root == null) return;
+        prevString = getChar(root.val)+prevString;
+        
+        if(root.left == null && root.right == null) {
+            if(smallestString.isEmpty() || prevString.compareTo(smallestString) < 0) {
+                smallestString = prevString;
+            }
+        }
+        
+        getSmallestLeaf(root.left, prevString);
+        getSmallestLeaf(root.right, prevString);
+        
+    }
+    
+    public String getChar(int alphabetVal) {
+        return String.valueOf((char)(alphabetVal+'a'));
+    } 
+}
