@@ -1,0 +1,33 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String expression) {
+        return findAll(expression);
+            
+    }
+    public static List<Integer> findAll(String str){
+        if(str.indexOf('+')<0 && str.indexOf('-')<0 && str.indexOf('*')<0){
+            return  Arrays.asList(Integer.parseInt(str));
+        }
+            
+        
+        List<Integer> tempAns = new ArrayList<Integer>();
+        for(int i=0; i<str.length(); i+=1){
+            if(str.charAt(i) == '+' || str.charAt(i) == '-' || str.charAt(i) == '*'){
+                char opr = str.charAt(i);
+                List<Integer> tempLeft = findAll(str.substring(0,i));
+                List<Integer> tempRight = findAll(str.substring(i+1,str.length()));
+                performCal(tempLeft, tempRight, opr, tempAns);
+                
+            }
+        }
+        return tempAns;
+    }
+    public static void performCal(List<Integer> tempLeft, List<Integer> tempRight, char opr,  List<Integer> tempAns) {
+        for(Integer left: tempLeft){
+            for(Integer right :tempRight){
+                if(opr == '+') tempAns.add(left+right);
+                else if(opr == '-') tempAns.add(left-right);
+                else if(opr == '*') tempAns.add(left*right);
+            }
+        }
+    }
+}
