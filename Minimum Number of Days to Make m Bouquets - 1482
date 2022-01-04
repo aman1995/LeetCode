@@ -1,0 +1,31 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        int ans=-1,min=Integer.MAX_VALUE,max=Integer.MIN_VALUE;
+        for(int i : bloomDay){
+            min = Math.min(i,min);
+            max = Math.max(i,max);
+        }
+        while(min<=max){
+            int mid = (min + max) / 2;
+            if(isValid(mid,bloomDay,m,k)) {
+                max = mid -1;
+                ans = mid;
+            }else min = mid + 1;
+        }
+        return ans;
+    }
+    public static boolean isValid(int num, int arr[], int m, int k){
+        
+        int temp = k,i = 0;
+        while(i<arr.length){
+            if(num>=arr[i++]){
+                 temp--;
+                if(temp == 0){
+                    temp = k;
+                    m--;
+                }
+            }else temp = k;
+        }
+        return m <= 0 ? true: false;
+    }
+}
