@@ -1,0 +1,30 @@
+class Solution {
+    public int longestStrChain(String[] words) {
+        HashMap<String, Integer> map = new HashMap<>();
+        for(String str: words){
+            map.put(str, -1);
+        }
+        int max = 1;
+        for(String str: words)
+            max = Math.max(findAll(str, map), max);
+        
+        return max;
+    }
+    public static int findAll(String str, HashMap<String, Integer> map){
+        
+        if(!map.containsKey(str))
+            return 0;
+        if(map.containsKey(str) && map.get(str) != -1)
+            return map.get(str);
+        
+        int max = 1;
+        for(int i=0;i<str.length();i++){
+            String temp = str.substring(0,i) + str.substring(i+1, str.length());
+            int count = findAll(temp,map);
+            max = Math.max(max, count == 0 ? 0 : 1 + count);
+        }
+        map.put(str, max);
+
+        return max;
+    }
+}
